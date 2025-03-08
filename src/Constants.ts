@@ -44,3 +44,9 @@ export const APPOINTMENT_MODE_OWN = 'own';
 export const APPOINTMENT_MODE_DEPENDENT = 'dependent'
 
 export const MAX_PERMISSIBLE_UPLOAD_FILE_SIZE_MB = 5;
+
+export const PENDING_APPOINTMENT_STATUS = "Pending";
+export const PAST_DUE_APPOINTMENT_STATUS = "Past due";
+export const COMPLETED_APPOINTMENT_STATUS = "Completed";
+export const CONFIRMED_APPOINTMENT_STATUS = "Confirmed";
+export const CANCELLED_APPOINTMENT_STATUS = "Cancelled";

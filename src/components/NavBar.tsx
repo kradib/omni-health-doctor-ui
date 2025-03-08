@@ -14,7 +14,6 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { AUTH_TOKEN_KEY, RouteConstants } from "../Constants";

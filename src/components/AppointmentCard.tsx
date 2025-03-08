@@ -12,7 +12,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import ViewAppointmentModal from "./ViewAppointmentModal";
-import { APPOINTMENT_MODE_DEPENDENT } from "../Constants";
+import {
+    APPOINTMENT_MODE_DEPENDENT,
+    CANCELLED_APPOINTMENT_STATUS,
+    COMPLETED_APPOINTMENT_STATUS,
+    CONFIRMED_APPOINTMENT_STATUS,
+    PAST_DUE_APPOINTMENT_STATUS,
+    PENDING_APPOINTMENT_STATUS,
+} from "../Constants";
 import Chip from "@mui/material/Chip";
 import { stringToColour } from "../utils/Utils";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -36,12 +43,6 @@ const statusStyle = {
     border: "1px solid",
     p: 0.5,
 };
-
-const PENDING_APPOINTMENT_STATUS = "Pending";
-const PAST_DUE_APPOINTMENT_STATUS = "Past due";
-const COMPLETED_APPOINTMENT_STATUS = "Completed";
-const CONFIRMED_APPOINTMENT_STATUS = "Confirmed";
-const CANCELLED_APPOINTMENT_STATUS = "Cancelled";
 
 const EDITABLE_APPOINT_STATUS = [
     PENDING_APPOINTMENT_STATUS,
@@ -135,7 +136,6 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
         return (
             <ViewAppointmentModal
                 show={showViewModal}
-                mode={mode}
                 handleClose={() => setShowViewModal(false)}
                 appointmentId={appointment.id}
             />
@@ -153,7 +153,7 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
                         sx={{ justifyContent: "space-between", alignItems: "center" }}
                         direction="row"
                     >
-                        <Typography variant="h2">{`${appointment.doctorDetail.firstName} ${appointment.doctorDetail.lastName}`}</Typography>
+                        <Typography variant="h2">{`${appointment.userDetail.firstName} ${appointment.userDetail.lastName}`}</Typography>
                         <Stack direction="row" spacing={2}>
                             {mode == APPOINTMENT_MODE_DEPENDENT && (
                                 <Chip
@@ -223,24 +223,31 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
                         direction="row"
                         spacing={2}
                     >
-                        {EDITABLE_APPOINT_STATUS.includes(appointmentStatus) &&
-                            mode != APPOINTMENT_MODE_DEPENDENT && (
-                                <>
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => console.log("Accepted")}
-                                    >
-                                        Accept
-                                    </Button>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={() => setCancellationConfirmation(true)}
-                                        color="error"
-                                    >
-                                        Reject
-                                    </Button>
-                                </>
-                            )}
+                        {EDITABLE_APPOINT_STATUS.includes(appointmentStatus) && (
+                            <>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => console.log("Accepted")}
+                                >
+                                    Accept
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => setCancellationConfirmation(true)}
+                                    color="error"
+                                >
+                                    Reject
+                                </Button>
+                            </>
+                        )}
+                        {PAST_DUE_APPOINTMENT_STATUS == appointmentStatus && (
+                            <Button
+                                variant="contained"
+                                onClick={() => console.log("Completed")}
+                            >
+                                Mark as Completed
+                            </Button>
+                        )}
                         <Button variant="contained" onClick={() => setShowViewModal(true)}>
                             View Details
                         </Button>

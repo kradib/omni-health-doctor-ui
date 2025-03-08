@@ -70,3 +70,26 @@ export const cancelAppointment = async (appointmentId: number) => {
   );
   return { success: false, data: response.data.data?.metadata?.errors[0] };
 };
+
+export const updateAppointment = async (
+  appointmentId: number,
+  appointmentDetails: any
+) => {
+  const request: IRequest = {
+    method: RequestMethod.PATCH,
+    message: appointmentDetails,
+    url: `${ApiRoutes.APPOINTMENT_BASE_ROUTE}/${appointmentId}`,
+    isAuthRequired: true,
+  };
+
+  const response = await sendRequest(request);
+  if (response.status == 200) {
+    return { success: true, data: "Appointment successfully updated" };
+  }
+  console.log(
+    `Appointment reschedule failed due to status: ${
+      response.status
+    } with error: ${JSON.stringify(response)}`
+  );
+  return { success: false, data: response.data.data?.metadata?.errors[0] };
+};

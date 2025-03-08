@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
 import ModalComponent from "./ModalComponent";
 import LoadingComponent from "./LoadingComponent";
-import { getAppointment } from "../api/appointment";
+import { getAppointment, updateAppointment } from "../api/appointment";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import dayjs from "dayjs";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { DoctorIcon } from "../icons/DoctorIcon";
 import TextField from "@mui/material/TextField";
-import ContentPasteOutlinedIcon from "@mui/icons-material/ContentPasteOutlined";
-import { useTheme } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import DownloadIcon from "@mui/icons-material/Download";
+import Button from "@mui/material/Button";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
-import { APPOINTMENT_MODE_OWN } from "../Constants";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { COMPLETED_APPOINTMENT_STATUS } from "../Constants";
 
 interface ViewAppointmentModalProps {
     show: boolean;
-    mode: string;
     appointmentId: number;
     handleClose: any;
 }
@@ -37,12 +33,9 @@ const appointmentNotesStyle = {
 
 const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
     show,
-    mode,
     appointmentId,
     handleClose,
 }) => {
-    const theme = useTheme();
-
     const [appointment, setAppointment] = useState<any>({});
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -60,48 +53,28 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
         }
     };
 
-    const getPrescription = () => {
-        return (
-            <>
-                <Stack
-                    sx={{ justifyContent: "space-between", alignItems: "center" }}
-                    direction="row"
-                    spacing={2}
-                >
-                    <Stack
-                        sx={{ justifyContent: "left", alignItems: "center" }}
-                        direction="row"
-                        spacing={2}
-                    >
-                        <ContentPasteOutlinedIcon />
-                        <Typography variant="body1">Prescription</Typography>
-                    </Stack>
-                    <IconButton
-                        sx={{ color: theme.palette.primary.main }}
-                        onClick={() => {
-                            console.log(appointment.id);
-                        }}
-                    >
-                        <DownloadIcon />
-                    </IconButton>
-                </Stack>
-            </>
-        );
+    const handleUpdateNotes = async () => {
+        setLoading(true);
+        const response = await updateAppointment(appointmentId, appointment);
+        setLoading(false);
+
+        if (response.success) {
+            setErrorMessage(null);
+            setAppointment(response.data?.data.appointmentSchedule);
+        } else {
+            setErrorMessage("Error fetching appointment details");
+        }
     };
 
     useEffect(() => {
         getAppointmentDetails();
     }, []);
 
-    const title =
-        mode == APPOINTMENT_MODE_OWN
-            ? `Your Appointment Details`
-            : `${appointment.userDetail?.firstName} ${appointment.userDetail?.lastName}'s Appointment Details`;
+    const title = `Patient Appointment Details`;
 
     return (
         <>
             <ModalComponent open={show} onClose={handleClose} title={title}>
-                {loading && <LoadingComponent isLoading={loading} />}
                 {errorMessage && (
                     <Typography variant="h4" sx={{ color: "red" }}>
                         {errorMessage}
@@ -137,8 +110,8 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                     direction="row"
                     spacing={2}
                 >
-                    <DoctorIcon />
-                    <Typography variant="body1">{`${appointment.doctorDetail?.firstName} ${appointment.doctorDetail?.lastName}`}</Typography>
+                    <PersonOutlineOutlinedIcon />
+                    <Typography variant="body1">{`${appointment.userDetail?.firstName} ${appointment.userDetail?.lastName}`}</Typography>
                 </Stack>
 
                 <Stack
@@ -153,32 +126,40 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                 </Stack>
 
                 <Stack spacing={1}>
-                    <Stack
-                        sx={{ justifyContent: "left", alignItems: "center" }}
-                        direction="row"
-                        spacing={2}
-                    >
-                        <SpeakerNotesOutlinedIcon />
-                        <Typography variant="body1">Appointment Notes</Typography>
-                    </Stack>
-
-                    <TextField
-                        // disabled
-                        multiline
-                        maxRows={10}
-                        slotProps={{
-                            input: {
-                                readOnly: true,
-                            },
-                        }}
-                        value={
-                            !!appointment.prescription?.length ||
-                            "There is no prescription added by the doctor"
-                        }
-                        sx={appointmentNotesStyle}
-                    />
+                    {appointment.appointmentStatus?.toLocaleLowerCase() ==
+                        COMPLETED_APPOINTMENT_STATUS.toLocaleLowerCase() && (
+                            <>
+                                <Stack
+                                    sx={{ justifyContent: "left", alignItems: "center" }}
+                                    direction="row"
+                                    spacing={2}
+                                >
+                                    <SpeakerNotesOutlinedIcon />
+                                    <Typography variant="body1">Appointment Notes</Typography>
+                                </Stack>
+                                <TextField
+                                    multiline
+                                    maxRows={10}
+                                    onChange={(e) =>
+                                        setAppointment({
+                                            ...appointment,
+                                            prescription: e.target.value,
+                                        })
+                                    }
+                                    value={appointment.prescription || ""}
+                                    sx={appointmentNotesStyle}
+                                />
+                                <Button
+                                    variant="contained"
+                                    loading={loading}
+                                    onClick={handleUpdateNotes}
+                                >
+                                    Update Notes
+                                </Button>
+                            </>
+                        )}
                 </Stack>
-                {!!appointment.prescription?.length && getPrescription()}
+                {loading && <LoadingComponent isLoading={loading} />}
             </ModalComponent>
         </>
     );

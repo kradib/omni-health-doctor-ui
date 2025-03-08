@@ -153,12 +153,11 @@ const AppointmentsGridComponent = ({
             <>
                 <Grid container sx={{ marginTop: 2, alignItems: "center" }} spacing={2}>
                     {appointmentList.map((appointment: any) => (
-                        <Grid key={appointment.id} size={{ xs: 12, md: 6, lg: 4 }}>
+                        <Grid key={appointment.id} size={{ xs: 12, md: 6 }}>
                             <AppointmentCard
                                 appointment={appointment}
                                 mode={mode}
                                 onCancel={handleAppointmentUpdated}
-                                onReschedule={handleAppointmentUpdated}
                             />
                         </Grid>
                     ))}
