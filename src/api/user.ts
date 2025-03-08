@@ -68,7 +68,11 @@ export const resetPassword = async (
 ) => {
   const request: IRequest = {
     method: RequestMethod.POST,
-    message: { token: verificationCode, newPassword: password, userName: username },
+    message: {
+      token: verificationCode,
+      newPassword: password,
+      userName: username,
+    },
     url: ApiRoutes.RESET_PASSWORD_ROUTE,
   };
   const response = await sendRequest(request);

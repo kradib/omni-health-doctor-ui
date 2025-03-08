@@ -10,6 +10,7 @@ import PublicRoute from "./components/PublicRoute";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import CssBaseline from "@mui/material/CssBaseline";
+import Register from "./pages/Register";
 
 const App = () => (
   <ThemeProvider theme={theme}>
@@ -23,6 +24,10 @@ const App = () => (
         <Route
           path={RouteConstants.LOGIN_ROUTE}
           element={<PublicRoute element={<Login />} />}
+        />
+        <Route
+          path={RouteConstants.REGISTER_ROUTE}
+          element={<PublicRoute element={<Register />} />}
         />
       </Routes>
     </Router>
