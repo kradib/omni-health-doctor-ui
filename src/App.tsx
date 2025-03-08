@@ -12,6 +12,9 @@ import theme from "./theme";
 import CssBaseline from "@mui/material/CssBaseline";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Appointments from "./pages/Appointments";
+import HelpCenter from "./pages/HelpCenter";
 
 const App = () => (
   <ThemeProvider theme={theme}>
@@ -33,6 +36,18 @@ const App = () => (
         <Route
           path={RouteConstants.FORGOT_PASSWORD_ROUTE}
           element={<ForgotPassword />}
+        />
+        <Route
+          path={RouteConstants.APPOINTMENT_ROUTE}
+          element={
+            <ProtectedRoute title="Appointments" element={<Appointments />} />
+          }
+        />
+        <Route
+          path={RouteConstants.HELP_CENTER_ROUTE}
+          element={
+            <ProtectedRoute title="Help Center" element={<HelpCenter />} />
+          }
         />
       </Routes>
     </Router>
