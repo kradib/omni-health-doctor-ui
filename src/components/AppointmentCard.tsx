@@ -21,7 +21,7 @@ import {
     PENDING_APPOINTMENT_STATUS,
 } from "../Constants";
 import Chip from "@mui/material/Chip";
-import { stringToColour } from "../utils/Utils";
+import { getAppointmentStatus, stringToColour } from "../utils/Utils";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
 interface IAppointmentCardProps {
@@ -49,43 +49,26 @@ const EDITABLE_APPOINT_STATUS = [
     CONFIRMED_APPOINTMENT_STATUS,
 ];
 
-const getAppointmentStatus: any = (appointment: any) => {
-    if (
-        appointment.appointmentStatus.toLocaleLowerCase() ==
-        CANCELLED_APPOINTMENT_STATUS.toLocaleLowerCase()
-    ) {
-        return {
-            appointmentStatus: CANCELLED_APPOINTMENT_STATUS,
-            statusColor: "#cf2b2b",
-        };
+const getAppointmentStatusWithColor: any = (appointment: any) => {
+    const appointmentStatus = getAppointmentStatus(appointment);
+    let statusColor = "#c2800e";
+    switch (appointmentStatus) {
+        case CANCELLED_APPOINTMENT_STATUS:
+            statusColor = "#cf2b2b";
+            break;
+        case COMPLETED_APPOINTMENT_STATUS:
+            statusColor = "1f97ed";
+            break;
+        case PAST_DUE_APPOINTMENT_STATUS:
+            statusColor = "#eb345b";
+            break;
+        default:
+            statusColor = "#c2800e";
     }
-    if (
-        appointment.appointmentStatus.toLocaleLowerCase() ==
-        COMPLETED_APPOINTMENT_STATUS.toLocaleLowerCase()
-    ) {
-        return {
-            appointmentStatus: COMPLETED_APPOINTMENT_STATUS,
-            statusColor: "#1f97ed",
-        };
-    }
-    if (dayjs(appointment.appointmentDateTime).isBefore(dayjs())) {
-        return {
-            appointmentStatus: PAST_DUE_APPOINTMENT_STATUS,
-            statusColor: "#eb345b",
-        };
-    }
-    if (
-        appointment.appointmentStatus.toLocaleLowerCase() ==
-        CONFIRMED_APPOINTMENT_STATUS.toLocaleLowerCase()
-    ) {
-        return {
-            appointmentStatus: CONFIRMED_APPOINTMENT_STATUS,
-            statusColor: "#0ec26e",
-        };
-    }
+
     return {
-        appointmentStatus: PENDING_APPOINTMENT_STATUS,
-        statusColor: "#c2800e",
+        appointmentStatus: appointmentStatus,
+        statusColor: statusColor,
     };
 };
 
@@ -94,7 +77,8 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
     mode,
     onCancel,
 }) => {
-    const { appointmentStatus, statusColor } = getAppointmentStatus(appointment);
+    const { appointmentStatus, statusColor } =
+        getAppointmentStatusWithColor(appointment);
     const [cancellationConfirmation, setCancellationConfirmation] =
         useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
