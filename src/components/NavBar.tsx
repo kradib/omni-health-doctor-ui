@@ -145,19 +145,6 @@ const NavBar = ({
                         </ListItemButton>
                     </ListItem>
 
-                    <ListItem key="patients" disablePadding>
-                        <ListItemButton
-                            onClick={() => {
-                                navigateToPage(RouteConstants.APPOINTMENT_ROUTE);
-                            }}
-                        >
-                            <ListItemIcon>
-                                <CalendarMonthIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="My Patients" />
-                        </ListItemButton>
-                    </ListItem>
-
                     <ListItem key="support">
                         <Typography variant="subtitle2">Support</Typography>
                     </ListItem>
