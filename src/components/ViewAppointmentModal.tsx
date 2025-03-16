@@ -8,9 +8,13 @@ import dayjs from "dayjs";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
+import BloodtypeOutlinedIcon from "@mui/icons-material/BloodtypeOutlined";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
+import HeightOutlinedIcon from "@mui/icons-material/HeightOutlined";
+import ScaleOutlinedIcon from "@mui/icons-material/ScaleOutlined";
 import {
     CANCELLED_APPOINTMENT_STATUS,
     COMPLETED_APPOINTMENT_STATUS,
@@ -194,7 +198,6 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
         );
     };
 
-
     const viewPrescription = () => (
         <Stack spacing={1}>
             <Stack
@@ -239,6 +242,59 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                         {errorMessage}
                     </Typography>
                 )}
+                <Stack
+                    sx={{ justifyContent: "left", alignItems: "center" }}
+                    direction="row"
+                    spacing={2}
+                >
+                    <PersonOutlineOutlinedIcon />
+                    <Typography variant="body1">{`${appointment.userDetail?.firstName} ${appointment.userDetail?.lastName}`}</Typography>
+                </Stack>
+
+                <Stack
+                    sx={{ justifyContent: "left", alignItems: "center" }}
+                    direction="row"
+                    spacing={2}
+                >
+                    <TodayOutlinedIcon />
+                    <Typography variant="body1">{`${dayjs().diff(
+                        dayjs(appointment.userDetail?.dateOfBirth),
+                        "year"
+                    )} year(s)`}</Typography>
+                </Stack>
+
+                {appointment.userDetail?.bloodGroup && (
+                    <Stack
+                        sx={{ justifyContent: "left", alignItems: "center" }}
+                        direction="row"
+                        spacing={2}
+                    >
+                        <BloodtypeOutlinedIcon />
+                        <Typography variant="body1">{`${appointment.userDetail?.bloodGroup}`}</Typography>
+                    </Stack>
+                )}
+
+                {appointment.userDetail?.height && (
+                    <Stack
+                        sx={{ justifyContent: "left", alignItems: "center" }}
+                        direction="row"
+                        spacing={2}
+                    >
+                        <HeightOutlinedIcon />
+                        <Typography variant="body1">{`${appointment.userDetail?.height} cm`}</Typography>
+                    </Stack>
+                )}
+
+                {appointment.userDetail?.weight && (
+                    <Stack
+                        sx={{ justifyContent: "left", alignItems: "center" }}
+                        direction="row"
+                        spacing={2}
+                    >
+                        <ScaleOutlinedIcon />
+                        <Typography variant="body1">{`${appointment.userDetail?.weight} kg`}</Typography>
+                    </Stack>
+                )}
 
                 <Stack
                     sx={{ justifyContent: "left", alignItems: "center", mb: 1 }}
@@ -269,21 +325,11 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                     direction="row"
                     spacing={2}
                 >
-                    <PersonOutlineOutlinedIcon />
-                    <Typography variant="body1">{`${appointment.userDetail?.firstName} ${appointment.userDetail?.lastName}`}</Typography>
-                </Stack>
-
-                <Stack
-                    sx={{ justifyContent: "left", alignItems: "center" }}
-                    direction="row"
-                    spacing={2}
-                >
                     <LocationOnOutlinedIcon />
                     <Typography variant="body1">
                         {appointment.doctorDetail?.location}
                     </Typography>
                 </Stack>
-
 
                 {isAppointmentCompleted && viewPrescription()}
 
