@@ -226,12 +226,6 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
                         {EDITABLE_APPOINT_STATUS.includes(appointmentStatus) && (
                             <>
                                 <Button
-                                    variant="contained"
-                                    onClick={() => console.log("Accepted")}
-                                >
-                                    Accept
-                                </Button>
-                                <Button
                                     variant="outlined"
                                     onClick={() => setCancellationConfirmation(true)}
                                     color="error"
