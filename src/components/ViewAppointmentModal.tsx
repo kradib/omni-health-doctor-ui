@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
 import {
     CANCELLED_APPOINTMENT_STATUS,
+    COMPLETED_APPOINTMENT_STATUS,
     PAST_DUE_APPOINTMENT_STATUS,
 } from "../Constants";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -65,6 +66,8 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
     const isAppointmentCancelled =
         appointmentStatus == CANCELLED_APPOINTMENT_STATUS;
     const isAppointmentPastDue = appointmentStatus == PAST_DUE_APPOINTMENT_STATUS;
+    const isAppointmentCompleted =
+        appointmentStatus == COMPLETED_APPOINTMENT_STATUS;
 
     const getAppointmentDetails = async () => {
         setLoading(true);
@@ -191,6 +194,7 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
         );
     };
 
+
     const viewPrescription = () => (
         <Stack spacing={1}>
             <Stack
@@ -212,7 +216,7 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                     },
                 }}
                 value={
-                    !!appointment.prescription?.length ||
+                    appointment.prescription ||
                     "There is no prescription added by the doctor"
                 }
                 sx={prescriptionStyle}
@@ -280,7 +284,8 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                     </Typography>
                 </Stack>
 
-                {!isAppointmentCancelled && viewPrescription()}
+
+                {isAppointmentCompleted && viewPrescription()}
 
                 <Stack direction="row" spacing={2}>
                     {!isAppointmentCancelled && viewNotes()}

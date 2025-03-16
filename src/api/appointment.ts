@@ -69,7 +69,7 @@ export const completeAppointment = async (
   const request: IRequest = {
     method: RequestMethod.PATCH,
     message: appointmentDetails,
-    url: `${ApiRoutes.APPOINTMENT_BASE_ROUTE}/${appointmentId}`,
+    url: `${ApiRoutes.DOCTOR_APPOINTMENT_ROUTE}/${appointmentId}`,
     isAuthRequired: true,
   };
 

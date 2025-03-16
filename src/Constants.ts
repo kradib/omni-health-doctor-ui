@@ -22,6 +22,7 @@ export class ApiRoutes {
 
   public static APPOINTMENT_NOTES_ROUTE = `note`;
   public static APPOINTMENT_DOCUMENT_ROUTE = `document`;
+  public static DOCTOR_APPOINTMENT_ROUTE = `${this.BASE_ROUTE}/doctor/appointments`
 
   public static UPLOAD_FILE_ROUTE = `${this.DOCUMENT_BASE_ROUTE}/upload`;
 }

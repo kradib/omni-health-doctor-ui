@@ -40,13 +40,14 @@ const AddPrescriptionModal: React.FC<AddPrescriptionModalProps> = ({
             >
                 <TextField
                     multiline
+                    minRows={5}
                     maxRows={10}
                     onChange={(e) => setPrescription(e.target.value)}
                     value={prescription}
                 />
                 <Button
                     variant="contained"
-                    disabled={prescription?.length > 0}
+                    disabled={prescription?.length == 0}
                     onClick={handleSubmit}
                     size="large"
                     loading={loading}

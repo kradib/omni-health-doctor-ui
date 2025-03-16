@@ -157,7 +157,7 @@ const AppointmentsGridComponent = ({
                             <AppointmentCard
                                 appointment={appointment}
                                 mode={mode}
-                                onCancel={handleAppointmentUpdated}
+                                onStatusChanged={handleAppointmentUpdated}
                             />
                         </Grid>
                     ))}

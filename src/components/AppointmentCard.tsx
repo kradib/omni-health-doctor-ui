@@ -23,11 +23,12 @@ import {
 import Chip from "@mui/material/Chip";
 import { getAppointmentStatus, stringToColour } from "../utils/Utils";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import AddPrescriptionModal from "./AddPrescriptionModal";
 
 interface IAppointmentCardProps {
     appointment: any;
     mode: string;
-    onCancel?: any;
+    onStatusChanged?: any;
 }
 
 const cardStyle = {
@@ -75,19 +76,28 @@ const getAppointmentStatusWithColor: any = (appointment: any) => {
 const AppointmentCard: React.FC<IAppointmentCardProps> = ({
     appointment,
     mode,
-    onCancel,
+    onStatusChanged,
 }) => {
     const { appointmentStatus, statusColor } =
         getAppointmentStatusWithColor(appointment);
     const [cancellationConfirmation, setCancellationConfirmation] =
         useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
+    const [showAddPrescriptionModal, setShowAddPrescriptionModal] =
+        useState(false);
 
     const handleCancel = async () => {
         const response = await cancelAppointment(appointment.id);
-        onCancel(response.data, response.success ? "success" : "error");
+        onStatusChanged(response.data, response.success ? "success" : "error");
         setCancellationConfirmation(false);
     };
+
+    const handleCompleted = (message: any, severity: any) => {
+        onStatusChanged(message, severity);
+        setShowAddPrescriptionModal(false);
+    };
+
+    const isAppointmentPastDue = appointmentStatus == PAST_DUE_APPOINTMENT_STATUS;
 
     const handleCancellationClose = () => {
         setCancellationConfirmation(false);
@@ -125,6 +135,25 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
             />
         );
     };
+
+    const addPrescription = () => (
+        <>
+            <Button
+                variant="contained"
+                onClick={() => setShowAddPrescriptionModal(true)}
+            >
+                Mark as Completed
+            </Button>
+            {showAddPrescriptionModal && (
+                <AddPrescriptionModal
+                    show={showAddPrescriptionModal}
+                    onUpdated={handleCompleted}
+                    onClose={() => setShowAddPrescriptionModal(false)}
+                    appointmentId={appointment.id}
+                />
+            )}
+        </>
+    );
 
     const appointmentUserName = `${appointment.userDetail?.firstName} ${appointment.userDetail?.lastName}`;
     const username = appointment.username;
@@ -218,14 +247,7 @@ const AppointmentCard: React.FC<IAppointmentCardProps> = ({
                                 </Button>
                             </>
                         )}
-                        {PAST_DUE_APPOINTMENT_STATUS == appointmentStatus && (
-                            <Button
-                                variant="contained"
-                                onClick={() => console.log("Completed")}
-                            >
-                                Mark as Completed
-                            </Button>
-                        )}
+                        {isAppointmentPastDue && addPrescription()}
                         <Button variant="contained" onClick={() => setShowViewModal(true)}>
                             View Details
                         </Button>
