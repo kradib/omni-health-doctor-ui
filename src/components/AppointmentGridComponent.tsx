@@ -45,7 +45,7 @@ const AppointmentsGridComponent = ({
 
     const getAppointmentList = async () => {
         setLoading(true);
-        const response = await getAppointments(appointmentParams, mode);
+        const response = await getAppointments(appointmentParams);
         setLoading(false);
         let appointmentList = [];
         if (response.success) {

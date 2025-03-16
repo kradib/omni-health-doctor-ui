@@ -20,7 +20,8 @@ export class ApiRoutes {
   public static FORGOT_PASSWORD_ROUTE = `${this.USER_BASE_ROUTE}/forget-password`;
   public static RESET_PASSWORD_ROUTE = `${this.USER_BASE_ROUTE}/reset-password`;
 
-  public static DEPENDENT_APPOINTMENT_ROUTE = `${this.APPOINTMENT_BASE_ROUTE}/dependents`;
+  public static APPOINTMENT_NOTES_ROUTE = `note`;
+  public static APPOINTMENT_DOCUMENT_ROUTE = `document`;
 
   public static UPLOAD_FILE_ROUTE = `${this.DOCUMENT_BASE_ROUTE}/upload`;
 }

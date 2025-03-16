@@ -39,15 +39,33 @@ export const stringToColour = (str: string) => {
   }
   return colour;
 };
+
+export const downloadFileFromResponse = (file: any, filename: string) => {
+  // Create a Blob URL
+  const url = window.URL.createObjectURL(new Blob([file]));
+
+  // Create an invisible link and trigger the download
+  const link = document.createElement("a");
+  link.href = url;
+
+  // Set the file name (you can get it from headers if needed)
+  link.setAttribute("download", filename);
+
+  // Add to the DOM, trigger click, and remove the element
+  document.body.appendChild(link);
+  link.click();
+  link.parentNode?.removeChild(link);
+};
+
 export const getAppointmentStatus: any = (appointment: any) => {
   if (
-    appointment.appointmentStatus.toLocaleLowerCase() ==
+    appointment.appointmentStatus?.toLocaleLowerCase() ==
     CANCELLED_APPOINTMENT_STATUS.toLocaleLowerCase()
   ) {
     return CANCELLED_APPOINTMENT_STATUS;
   }
   if (
-    appointment.appointmentStatus.toLocaleLowerCase() ==
+    appointment.appointmentStatus?.toLocaleLowerCase() ==
     COMPLETED_APPOINTMENT_STATUS.toLocaleLowerCase()
   ) {
     return COMPLETED_APPOINTMENT_STATUS;
