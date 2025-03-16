@@ -1,6 +1,5 @@
 export const enum RouteConstants {
   LOGIN_ROUTE = "login",
-  REGISTER_ROUTE = "register",
   FORGOT_PASSWORD_ROUTE = "forgot-password",
   APPOINTMENT_ROUTE = "appointments",
   DEPENDENT_APPOINTMENT_ROUTE = "dependent-appointments",
@@ -26,6 +25,7 @@ export class ApiRoutes {
   public static UPLOAD_FILE_ROUTE = `${this.DOCUMENT_BASE_ROUTE}/upload`;
 }
 
+export const REDIRECT_TIMEOUT = 3000;
 export const RESEND_ATTEMPTS = 3;
 export const RESEND_TIME_INTERVAL = 60;
 export const SNACKBAR_TIMEOUT = 3000;

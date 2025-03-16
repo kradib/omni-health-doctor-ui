@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import {
+    REDIRECT_TIMEOUT,
     RESEND_ATTEMPTS,
     RESEND_TIME_INTERVAL,
     RouteConstants,
@@ -12,7 +13,6 @@ import {
 import { resetPassword, sendCode } from "../api/user";
 import Toast from "../components/Toast";
 import { useNavigate } from "react-router";
-import { REDIRECT_TIMEOUT } from "./Register";
 import PasswordField from "../components/PasswordField";
 import Link from '@mui/material/Link';
 const ForgotPassword = () => {

@@ -10,7 +10,6 @@ import PublicRoute from "./components/PublicRoute";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import CssBaseline from "@mui/material/CssBaseline";
-import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Appointments from "./pages/Appointments";
@@ -28,10 +27,6 @@ const App = () => (
         <Route
           path={RouteConstants.LOGIN_ROUTE}
           element={<PublicRoute element={<Login />} />}
-        />
-        <Route
-          path={RouteConstants.REGISTER_ROUTE}
-          element={<PublicRoute element={<Register />} />}
         />
         <Route
           path={RouteConstants.FORGOT_PASSWORD_ROUTE}

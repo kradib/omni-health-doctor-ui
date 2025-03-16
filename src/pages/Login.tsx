@@ -131,10 +131,7 @@ const Login = () => {
 
                     <div>
                         <Typography variant="subtitle1">
-                            Not yet registered?{" "}
-                            <Link href={RouteConstants.REGISTER_ROUTE} underline="none">
-                                Register Here
-                            </Link>
+                            Not yet registered? Please reach out to admin.
                         </Typography>
                     </div>
                 </Box>
