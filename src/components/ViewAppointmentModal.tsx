@@ -335,7 +335,7 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
 
                 <Stack direction="row" spacing={2}>
                     {!isAppointmentCancelled && viewNotes()}
-                    {!isAppointmentCancelled && isAppointmentPastDue && addNotes()}
+                    {!isAppointmentCancelled && addNotes()}
                 </Stack>
 
                 <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
