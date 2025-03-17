@@ -4,17 +4,16 @@ import Stack from "@mui/material/Stack";
 import React from "react";
 import dayjs from "dayjs";
 import ModalComponent from "./ModalComponent";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 interface ViewAppointmentNotesComponentProps {
     show: boolean;
-    doctorName: string;
     appointmentNotes: any;
     onClose: any;
 }
 
 const ViewAppointmentNotesComponent: React.FC<
     ViewAppointmentNotesComponentProps
-> = ({ show, doctorName, appointmentNotes, onClose }) => {
+> = ({ show, appointmentNotes, onClose }) => {
     return (
         <>
             <ModalComponent
@@ -36,19 +35,25 @@ const ViewAppointmentNotesComponent: React.FC<
                     {appointmentNotes.map((msg: any, index: number) => (
                         <>
                             <Stack spacing={1}>
-                                <Typography variant="body2">{`${msg.name} ${dayjs(
-                                    msg.createdAt
-                                ).format("DD-MM-YYYY hh:mm")}`}</Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        alignSelf:
+                                            msg.role === "doctor" ? "flex-start" : "flex-end",
+                                    }}
+                                >{`${msg.name} ${dayjs(msg.createdAt).format(
+                                    "DD-MM-YYYY hh:mm"
+                                )}`}</Typography>
                                 <Paper
                                     key={index}
                                     sx={{
                                         p: 1.5,
                                         maxWidth: "75%",
                                         alignSelf:
-                                            msg.name === doctorName ? "flex-end" : "flex-start",
+                                            msg.role === "doctor" ? "flex-start" : "flex-end",
                                         bgcolor:
-                                            msg.name === doctorName ? "primary.main" : "grey.300",
-                                        color: msg.name === doctorName ? "white" : "black",
+                                            msg.role === "doctor" ? "grey.300" : "primary.main",
+                                        color: msg.role === "doctor" ? "black" : "white",
                                         borderRadius: 2,
                                     }}
                                 >
