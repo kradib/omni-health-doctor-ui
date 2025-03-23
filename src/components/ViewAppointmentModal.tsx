@@ -10,6 +10,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import BloodtypeOutlinedIcon from "@mui/icons-material/BloodtypeOutlined";
+import FemaleOutlinedIcon from '@mui/icons-material/FemaleOutlined';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
@@ -248,6 +249,15 @@ const ViewAppointmentModal: React.FC<ViewAppointmentModalProps> = ({
                 >
                     <PersonOutlineOutlinedIcon />
                     <Typography variant="body1">{`${appointment.userDetail?.firstName} ${appointment.userDetail?.lastName}`}</Typography>
+                </Stack>
+
+                <Stack
+                    sx={{ justifyContent: "left", alignItems: "center" }}
+                    direction="row"
+                    spacing={2}
+                >
+                    <FemaleOutlinedIcon />
+                    <Typography variant="body1">{`${appointment.userDetail?.gender}`}</Typography>
                 </Stack>
 
                 <Stack

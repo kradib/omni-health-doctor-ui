@@ -42,6 +42,12 @@ export const SUPPORTED_FILE_TYPES_FOR_UPLOAD = [
   "image/jpeg",
 ];
 
+export const GENDER_OPTIONS = [
+  "MALE",
+  "FEMALE",
+  "OTHERS"
+]
+
 export const APPOINTMENT_MODE_OWN = 'own';
 export const APPOINTMENT_MODE_DEPENDENT = 'dependent'
 
